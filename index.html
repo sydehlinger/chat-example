@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+  <title>Socket.IO chat</title>
+  <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font: 13px Helvetica, Arial; color: black; }
+  button { width: 10%; background: rgb(130, 224, 255); padding: 10px; font: 15px Helvetica, Arial; }
+  form { background: white; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+  form input { border: solid black 1px; padding: 10px; width: 90%; }
+  #messages { list-style-type: none; margin: 0; padding: 0; }
+  #messages li { padding: 5px 10px; }
+  #messages li:nth-child(odd) { background: #eee; }
+  h1 { font: 20px Helvetica, Arial; color: white; }
+  ul { margin: 2% 5%; background-color: white; }
+  .button { text-align: center; clear: right; width: 90%; margin: 0 0 2% 0; }
+  .input {margin: 1% 0; width: 90%; font-size: 22px; }
+  .ul { list-style-type: none; color: black; font: 15px Helvetica, Arial; text-align: left; padding: 0 2%; }
+  .sidebar { float: right; width: 19%; height: 100%; text-align: center; background-color: #B3B3B3; margin: 0 .2% 0 0; position}
+  </style>
+</head>
+
+<body>
+  <div class="sidebar"><!--sidebar-->
+    <input id="u" autocomplete="off" class="input" />
+    <br /><button class="button">Change Username</button>
+    <br /><h1>Users Online:</h1>
+    <ul id="usernames" class="ul"></ul>
+  </div><!--end sidebar-->
+  <div> <!--chat window-->
+    <ul id="messages"></ul>
+  </div><!--end chat window-->
+  <div> <!--chat bar-->
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+  </div><!--end chat bar-->
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+  var socket = io();
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
+  $('form').submit(function(){
+    socket.emit('username changed', $('#u').val());
+    $('#u').val('');
+    return false;
+  });
+  socket.on('username changed', function(msg){
+    $('#usernames').append($('<li>').text(msg));
+  });
+  
+  </script>
+</body>
+</html>
