@@ -17,18 +17,11 @@ io.on('connection', function(socket){
   });
   socket.on('chat message', function(msg){
     var time = Date();
-    console.log('message: ' + msg);
+    console.log('User: ' + msg);
     io.emit('chat message', "User " + "[" + time + "]" + " : " + msg);
   });
-  socket.on('username change', function(msg){
-    console.log('Username changed: ' + msg);
-    io.emit('chat message', "User " + "[" + time + "]" + " : " + msg);
+  socket.on('username', function(msg){
+    console.log('Username changed to ' + msg);
+    io.emit('username changed', + msg);
   });
 });
-
-//function timestamp(); {
-//var get = Date();
-//var hours = get.getHours();
-//var minutes = get.getMinutes();
-//var seconds = get.getSeconds();
-//}
