@@ -3,105 +3,111 @@
 <head>
   <title>Chatroom</title>
   <style>
-  * { 
-    margin: 0; 
-    padding: 0; 
+  * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
   }
-  body { 
-    font: 13px Helvetica, Arial; 
-    color: black; 
+  body {
+    font: 13px Helvetica, Arial;
+    color: black;
   }
-  button { 
-    width: 10%; 
-    background: rgb(130, 224, 255); 
-    padding: 10px; 
-    font: 15px Helvetica, Arial; 
-    border-radius: 5px; 
+  button {
+    width: 10%;
+    background: rgb(130, 224, 255);
+    padding: 10px;
+    font: 15px Helvetica, Arial;
+    border-radius: 5px;
   }
-  form input { 
-    border: solid black 1px; 
-    padding: 10px; width: 90%; 
-    border-radius: 5px; 
+  form input {
+    border: solid black 1px;
+    padding: 10px;
+    width: 67%;
+    border-radius: 5px;
   }
-  h1 { 
-    font: 22px Helvetica, Arial; 
-    color: white; 
-    margin: 1%; 
+  h1 {
+    font: 22px Helvetica, Arial;
+    color: white;
+    margin: 1%;
   }
-  ul { 
-    margin: 2% 5%; 
-    background-color: white; 
+  ul {
+    margin: 2% 5%;
+    background-color: white;
   }
-  
-  .button { 
-    text-align: center; 
-    clear: right; 
-    width: 80%; 
-    font-size: 14px; 
-    margin: 1%; 
-    border-radius: 5px; 
+  .button {
+    text-align: center;
+    clear: right;
+    width: 80%;
+    font-size: 14px;
+    margin: 1%;
+    border-radius: 5px;
   }
-  .form { 
-    background: white; 
-    padding: 3px; 
-    position: fixed; 
-    bottom: 0; 
-    width: 100%; 
+  .chatwindow {
+    margin: 0 22% 4% 0;
+  }
+  .form {
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
   }
   .input {
-    margin: 3% 0 1% 0; 
-    width: 90%; 
-    font-size: 22px; 
-    text-align: center; 
-    border-radius: 5px; 
+    margin: 3% 0 1% 0;
+    width: 90%;
+    font-size: 22px;
+    text-align: center;
+    border-radius: 5px;
   }
-  .ul { 
-    list-style-type: none; 
-    color: black; 
-    font: 15px Helvetica, Arial; 
-    text-align: left; 
-    padding: 0 2%;  
+  .ul {
+    list-style-type: none;
+    color: black;
+    font: 15px Helvetica, Arial;
+    text-align: left;
+    padding: 0 2%;
   }
-  .sidebar { 
+  .sidebar {
     border: black solid 1px;
-    float: right; 
-    width: 19%; 
-    text-align: center; 
-    background-color: #B3B3B3; 
-    margin: 0 .2% 0 0; 
-    border-radius: 8px; 
+    float: right;
+    width: 22%;
+    text-align: center;
+    background-color: #B3B3B3;
+    margin: 0 .1% 0 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: fixed;
+    bottom: .2%;
+    right: 0;
+    height: 99.5%
   }
-  
-  #messages { 
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
+  #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
   }
-  #messages li { 
-    padding: 5px 10px; 
+  #messages li {
+    padding: 5px 10px;
   }
-  #messages li:nth-child(odd) { 
-    background: #eee; 
+  #messages li:nth-child(odd) {
+    background: #eee;
   }
-  </style> 
+  </style>
 </head>
 <body>
-  <div class="sidebar"><!--sidebar-->
-    <form id="username">
-      <input id="u" autocomplete="off" class="input" placeholder="Enter username here..." />
-      <br /><button class="button" id="username-button">Change Username</button>
-    </form> 
-    <h1>Users Online:</h1>
-    <ul id="usernames" class="ul"></ul>
-  </div><!--end sidebar-->
-  <div> <!--chat window-->
+  <div class="chatwindow"> <!--chat window-->
     <ul id="messages"></ul>
   </div><!--end chat window-->
   <div> <!--chat bar-->
     <form id="message" action="" class="form">
       <input id="m" autocomplete="off" placeholder="Type message here..."/><button id="message-button">Send</button>
     </form>
+    <div class="sidebar">
+      <form id="username">
+        <input id="u" autocomplete="off" class="input" placeholder="Enter username here..." />
+        <br /><button class="button" id="username-button">Change Username</button>
+      </form>
+      <h1>Users Online:</h1>
+      <ul id="usernames" class="ul"></ul>
+    </div>
   </div><!--end chat bar-->
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
