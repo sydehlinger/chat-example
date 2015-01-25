@@ -32,7 +32,7 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg){
       var time = Date();
       console.log('User: ' + msg);
-      io.emit('chat message', socket.nickname + " : " + msg);
+      io.emit('chat message', socket.nickname + ": " + msg);
     });
 
     socket.on('disconnect', function(){
