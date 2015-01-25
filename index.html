@@ -54,7 +54,7 @@
   .input {
     margin: 3% 0 1% 0;
     width: 90%;
-    font-size: 22px;
+    font-size: 18px;
     text-align: center;
     border-radius: 5px;
   }
@@ -79,6 +79,9 @@
     right: 0;
     height: 99.5%
   }
+  #container{
+    display: none;
+  }
   #messages {
     list-style-type: none;
     margin: 0;
@@ -90,9 +93,24 @@
   #messages li:nth-child(odd) {
     background: #eee;
   }
+  #users {
+    color: white;
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+  }
   </style>
 </head>
 <body>
+  <div id="nicknameDiv">
+    <p>Enter a username:</p>
+    <p id="nicknameError"></p>
+    <form id="setnickname">
+      <input size="35" id="nickname" autocomplete="off" />
+      <input type="submit" />
+    </form>
+  </div>
+<div id="container">
   <div class="chatwindow"> <!--chat window-->
     <ul id="messages"></ul>
   </div><!--end chat window-->
@@ -100,19 +118,42 @@
     <form id="message" action="" class="form">
       <input id="m" autocomplete="off" placeholder="Type message here..."/><button id="message-button">Send</button>
     </form>
-    <div class="sidebar">
-      <form id="username">
-        <input id="u" autocomplete="off" class="input" placeholder="Enter username here..." />
-        <br /><button class="button" id="username-button">Change Username</button>
-      </form>
-      <h1>Users Online:</h1>
-      <ul id="usernames" class="ul"></ul>
-    </div>
   </div><!--end chat bar-->
+    <div class="sidebar">
+      <h1>Users Online:</h1>
+      <div id="users"></div>
+    </div>
+</div>
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
   var socket = io();
+  var $nickForm = $('#setnickname');
+  var $nickError = $('#nicknameError');
+  var $nickBox = $('#nickname');
+  var $users = $('#users');
+
+  $nickForm.submit(function(e){
+    e.preventDefault();
+    socket.emit('new user', $nickBox.val(), function(data){
+      if(data) {
+        $('#nicknameDiv').hide();
+        $('#container').show();
+      } else{
+        $nickError.html('That username is alreay taken.');
+      }
+    });
+    $nickBox.val('');
+  });
+
+  socket.on('usernames', function(data){
+    var html = '';
+    for(i=0; i < data.length; i++){
+      html += data[i] + '<br/>'
+    }
+    $users.html(html);
+  });
+
   $('#message-button').click(function(e){
     e.preventDefault();
     socket.emit('chat message', $('#m').val());
