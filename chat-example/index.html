@@ -81,12 +81,6 @@
     margin: 1% 0 0 0;
     width: 50%;
   }
-  #changenickname {
-    width: 90%;
-  }
-  #change {
-    width: 80%;
-  }
   #container{
     display: none;
   }
@@ -100,10 +94,6 @@
   }
   #messages li:nth-child(odd) {
     background: #eee;
-  }
-  #newnickname {
-    width: 98%;
-    margin: 210% 1% 1% 1%;
   }
   #nickname {
     text-align: center;
@@ -131,7 +121,6 @@
   }
   </style>
 </head>
-
 <body>
   <div id="nicknameDiv">
     <p>Enter a username:</p>
@@ -151,18 +140,10 @@
     </form>
   </div><!--end chat bar-->
     <div class="sidebar">
-      <div><!--users online-->
-          <h1>Users Online:</h1>
-          <ul id="users"></ul>
-      </div><!--end users online-->
-        <form id="newnickname">
-          <input size="35" id="changenickname" autocomplete="off" />
-          <br /><button id="change">Change Username</button>
-        </form>
-        <p id="changenicknameError"></p>
-    </div><!--end sidebar-->
+      <h1>Users Online:</h1>
+      <ul id="users"></ul>
+    </div>
 </div>
-
   <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
@@ -170,11 +151,8 @@
   var $nickForm = $('#setnickname');
   var $nickError = $('#nicknameError');
   var $nickBox = $('#nickname');
-  var $changeNickForm = $('#newnickname')
-  var $changeNickBox = $('#changenickname')
-  var $changeNickError = $('#changenicknameError')
   var $users = $('#users');
-  var $chatwindow = $('#messages');
+  var $chatwindow =$('#messages');
 
   $nickForm.submit(function(e){
     e.preventDefault();
@@ -183,7 +161,7 @@
         $('#nicknameDiv').hide();
         $('#container').show();
       } else{
-        $nickError.html('That username is already taken.');
+        $nickError.html('That username is alreay taken.');
       }
     });
     $nickBox.val('');
@@ -195,19 +173,6 @@
       html += data[i] + '<br/>'
     }
     $users.html(html);
-  });
-  
-  $changeNickForm.submit(function(e){
-    e.preventDefault();
-    socket.emit('change username', $changeNickBox.val(), function(data){
-      if(data){
-        $changeNickError.hide();
-      } else{
-        $changeNickError.show();
-        $changeNickError.html('That username is alreay taken.');
-      }
-    });
-    $changeNickBox.val('');
   });
 
   $('#message-button').click(function(e){
