@@ -82,10 +82,18 @@
     width: 50%;
   }
   #changenickname {
-    width: 90%;
+    width: 99%;
+    text-align: center;
+    margin: 0 0 2% 0;
+  }
+  #changeusername{
+    position:fixed;
+    bottom: 0;
+    margin: 0 0 1% .5%;
   }
   #change {
     width: 80%;
+    border: solid black 1px;
   }
   #container{
     display: none;
@@ -103,7 +111,6 @@
   }
   #newnickname {
     width: 98%;
-    margin: 210% 1% 1% 1%;
   }
   #nickname {
     text-align: center;
@@ -127,7 +134,7 @@
     color: black;
     font-size: 20px;
     text-align: left;
-    margin: 2% 8%;
+    margin: 2% 8% 50% 8%;
   }
   </style>
 </head>
@@ -155,11 +162,13 @@
           <h1>Users Online:</h1>
           <ul id="users"></ul>
       </div><!--end users online-->
+      <div id="changeusername"><!--Change username-->
         <form id="newnickname">
           <input size="35" id="changenickname" autocomplete="off" />
           <br /><button id="change">Change Username</button>
         </form>
         <p id="changenicknameError"></p>
+      </div><!--end change username-->
     </div><!--end sidebar-->
 </div>
 

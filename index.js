@@ -40,7 +40,7 @@ io.on('connection', function(socket){
       } else{
         callback(true);
         console.log(data + ' has changed their name to ' + socket.nickname);
-        io.emit('chat message', data + ' has changed their name to ' + socket.nickname);
+        io.emit('chat message', socket.nickname + ' has changed their name to ' + data);
         nicknames.splice(nicknames.indexOf(socket.nickname), 1);
         socket.nickname = data;
         nicknames.push(socket.nickname);
