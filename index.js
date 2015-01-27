@@ -28,7 +28,7 @@ io.on('connection', function(socket){
         socket.nickname = data;
         nicknames.push(socket.nickname);
         console.log(socket.nickname + ' has joined');
-        io.emit('chat message', socket.nickname + " has connected.");
+        io.emit('chat message', socket.nickname + " has joined.");
         updateNicknames();
       }
     });
@@ -39,6 +39,8 @@ io.on('connection', function(socket){
         callback(false);
       } else{
         callback(true);
+        console.log(data + ' has changed their name to ' + socket.nickname);
+        io.emit('chat message', data + ' has changed their name to ' + socket.nickname);
         nicknames.splice(nicknames.indexOf(socket.nickname), 1);
         socket.nickname = data;
         nicknames.push(socket.nickname);
@@ -73,6 +75,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
       if(!socket.nickname) return;
       nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+      io.emit('chat message', socket.nickname + " has disconnected.")
       console.log(socket.nickname + " has disconnected");
       updateNicknames();
     });

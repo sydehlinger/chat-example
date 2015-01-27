@@ -179,7 +179,7 @@
   $nickForm.submit(function(e){
     e.preventDefault();
     socket.emit('new user', $nickBox.val(), function(data){
-      if(data) {
+      if (data) {
         $('#nicknameDiv').hide();
         $('#container').show();
       } else{
@@ -196,7 +196,7 @@
     }
     $users.html(html);
   });
-  
+
   $changeNickForm.submit(function(e){
     e.preventDefault();
     socket.emit('change username', $changeNickBox.val(), function(data){
