@@ -13,13 +13,12 @@ http.listen(2000, function(){
 
 io.on('connection', function(socket){
     console.log('A user has connected');
-    io.emit('chat message', socket.nickname + "has connected.");
-    
-//Update username function    
+
+//Update username function
     function updateNicknames(){
       io.emit('usernames', nicknames);
     }
-    
+
 //Enter a username
     socket.on('new user', function(data, callback){
       if (nicknames.indexOf(data) != -1){
@@ -29,11 +28,12 @@ io.on('connection', function(socket){
         socket.nickname = data;
         nicknames.push(socket.nickname);
         console.log(socket.nickname + ' has joined');
+        io.emit('chat message', socket.nickname + " has connected.");
         updateNicknames();
       }
     });
-    
-//Change username    
+
+//Change username
     socket.on('change username', function(data, callback){
       if (nicknames.indexOf(data) != -1){
         callback(false);
@@ -45,21 +45,35 @@ io.on('connection', function(socket){
         updateNicknames();
       }
     });
-    
+
 //Messages
     socket.on('chat message', function(msg){
       console.log(socket.nickname + ": " + msg);
-      io.emit('chat message', socket.nickname + ": " + msg);
+      io.emit('chat message', timestamp() + " " + socket.nickname + ": " + msg);
     });
 
 //Timestamp
-    function 
-    
+    function timestamp(){
+      var date = new Date();
+      var hour = date.getHours();
+      var minute = date.getMinutes();
+      var second = date.getSeconds();
+
+      if (minute < 30){
+        minute = "0" + minute;
+      }
+      if (second < 30){
+        second = "0" + second;
+      }
+
+      return "[" + hour + ":" + minute + ":" + second + "]";
+    }
+
 //Disconnect
     socket.on('disconnect', function(){
       if(!socket.nickname) return;
       nicknames.splice(nicknames.indexOf(socket.nickname), 1);
-      console.log(socket.nickname + " has disconnected")
+      console.log(socket.nickname + " has disconnected");
       updateNicknames();
     });
 });
